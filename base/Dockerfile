@@ -5,16 +5,19 @@
 FROM       debian:latest
 MAINTAINER Emilio Palumbo <emiliopalumbo@gmail.com>
 
+ENV DEBIAN_FRONTEND noninteractive
+
 RUN apt-get update --fix-missing
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \ 
+RUN apt-get install -y \ 
     gcc \
     make \
     build-essential \
     git \
     python-dev \
     python-pip \
-    locales
+    locales \
+    wget
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     locale-gen en_US.UTF-8 && \
