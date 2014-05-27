@@ -5,9 +5,6 @@
 FROM       grape/base 
 MAINTAINER Emilio Palumbo <emiliopalumbo@gmail.com>
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \ 
-    wget 
-
 RUN wget -q https://github.com/arq5x/bedtools2/releases/download/v{{ version }}/bedtools-{{ version }}.tar.gz 
 
 RUN mkdir bedtools-{{ version }} && \
