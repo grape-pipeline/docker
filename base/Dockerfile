@@ -1,4 +1,4 @@
-# Dockerfile for Gemtools 
+# Dockerfile for the base image
 #
 # VERSION               0.1
 
@@ -9,7 +9,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update --fix-missing
 
-RUN apt-get install -y \ 
+RUN apt-get install -y \
     gcc \
     make \
     build-essential \
