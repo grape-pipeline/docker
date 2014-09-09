@@ -1,4 +1,7 @@
-Using jinja2 templates
-----------------------
+A repository containing Dockerfiles for Grape tools.
 
-    python -c 'import jinja2; print jinja2.Template(open("./Dockerfile").read()).render(version="2.19.1")' | docker build -t grape/bedtools:2.19.1 -
+The following Dockerfiles are available:
+
+- base
+- bedtools
+- gemtools
