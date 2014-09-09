@@ -5,13 +5,18 @@
 FROM       grape/base
 MAINTAINER Emilio Palumbo <emiliopalumbo@gmail.com>
 
-RUN wget -q https://github.com/arq5x/bedtools2/releases/download/v2.20.1/bedtools-2.20.1.tar.gz
+RUN filename=$(curl -sLI https://api.github.com/repos/arq5x/bedtools2/tarball | grep filename= | sed 's/.*filename=\(.*\)\r/\1/g') && \
+    curl -o $filename -L https://api.github.com/repos/arq5x/bedtools2/tarball
 
-RUN mkdir bedtools-2.20.1 && \
-    tar xf bedtools-2.20.1.tar.gz --strip-components=1 -C bedtools-2.20.1 && \
-    rm bedtools-2.20.1.tar.gz
+RUN filename=$(curl -sLI https://api.github.com/repos/arq5x/bedtools2/tarball | grep filename= | sed 's/.*filename=\(.*\)\r/\1/g') && \
+    dirname=${filename%.tar.gz} && \
+    mkdir $dirname && \
+    tar xf $filename --strip-components=1 -C $dirname && \
+    rm $filename
 
-RUN cd bedtools-2.20.1 && \
+RUN filename=$(curl -sLI https://api.github.com/repos/arq5x/bedtools2/tarball | grep filename= | sed 's/.*filename=\(.*\)\r/\1/g') && \
+    dirname=${filename%.tar.gz} && \
+    cd $dirname && \
     make && \
     cp -p --update bin/* /usr/local/bin
 
