@@ -8,8 +8,9 @@ MAINTAINER Emilio Palumbo <emiliopalumbo@gmail.com>
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     libbz2-dev
 
-RUN git clone https://github.com/gemtools/gemtools && \
-    cd gemtools && \
+RUN git clone https://github.com/gemtools/gemtools
+
+RUN cd gemtools && \
     git checkout v1.6.2
 
 RUN cd gemtools && \
