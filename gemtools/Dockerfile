@@ -10,7 +10,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
 
 RUN git clone https://github.com/gemtools/gemtools && \
     cd gemtools && \
-    git checkout v{{ version }}
+    git checkout v1.6.2
 
 RUN cd gemtools && \
     python setup.py install
