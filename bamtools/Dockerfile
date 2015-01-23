@@ -1,4 +1,4 @@
-# Dockerfile for BEDtools
+# Dockerfile for BAMtools
 #
 # VERSION               0.1
 
