@@ -1,4 +1,4 @@
-# Dockerfile for GEMtools
+# Dockerfile for the Flux Capacitor
 #
 # VERSION               0.1
 
