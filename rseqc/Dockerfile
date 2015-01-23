@@ -1,4 +1,4 @@
-# Dockerfile for BEDtools
+# Dockerfile for RSeQC
 #
 # VERSION               0.1
 
