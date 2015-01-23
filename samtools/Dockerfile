@@ -1,4 +1,4 @@
-# Dockerfile for BEDtools
+# Dockerfile for SAMtools
 #
 # VERSION               0.1
 
