@@ -7,9 +7,7 @@ MAINTAINER Emilio Palumbo <emiliopalumbo@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update --fix-missing
-
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
     gcc \
     make \
     build-essential \
@@ -17,7 +15,6 @@ RUN apt-get install -y \
     python-dev \
     python-pip \
     locales \
-    wget \
     curl
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
