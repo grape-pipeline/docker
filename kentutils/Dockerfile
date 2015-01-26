@@ -7,13 +7,16 @@ MAINTAINER Emilio Palumbo <emiliopalumbo@gmail.com>
 
 ENV _KENTUTILS_VERSION 308
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing && \
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
     apt-get install -y \
     unzip libpng-dev libmysqlclient-dev
 
 RUN curl -O http://hgdownload.soe.ucsc.edu/admin/exe/userApps.v$_KENTUTILS_VERSION.src.tgz && \
-    tar xf userApps.v$_KENTUTILS_VERSION.src.tgz
+    tar xf userApps.v$_KENTUTILS_VERSION.src.tgz && \
+    rm userApps.v$_KENTUTILS_VERSION.src.tgz
 
 RUN cd userApps && \
     make libs utils && \
-    cp -p --update bin/* /usr/local/bin
+    cp -p --update bin/* /usr/local/bin && \
+    cd .. && \
+    rm -rf userApps
