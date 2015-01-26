@@ -7,7 +7,7 @@ MAINTAINER Emilio Palumbo <emiliopalumbo@gmail.com>
 
 ENV _FLUX_VERSION 1.6.1
 
-RUN wget --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/7u76-b13/jre-7u76-linux-x64.tar.gz && \
+RUN curl -O --header "Cookie: oraclelicense=accept-securebackup-cookie" -L http://download.oracle.com/otn-pub/java/jdk/7u76-b13/jre-7u76-linux-x64.tar.gz && \
     tar xf jre-7u76-linux-x64.tar.gz && \
     update-alternatives --install /usr/bin/java java /jre1.7.0_76/bin/java 100
 
