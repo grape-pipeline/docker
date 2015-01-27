@@ -6,6 +6,7 @@ FROM       grape/base
 MAINTAINER Emilio Palumbo <emiliopalumbo@gmail.com>
 
 ENV _KENTUTILS_VERSION 308
+ENV PATH /userApps/bin:$PATH
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
     apt-get install -y \
@@ -16,7 +17,8 @@ RUN curl -O http://hgdownload.soe.ucsc.edu/admin/exe/userApps.v$_KENTUTILS_VERSI
     rm userApps.v$_KENTUTILS_VERSION.src.tgz
 
 RUN cd userApps && \
-    make libs utils && \
-    cp -p --update bin/* /usr/local/bin && \
-    cd .. && \
-    rm -rf userApps
+    make libs && \
+    cd kent/src && \
+    make topLibs hgLib destBin && \
+    cd utils && \
+    make userAppsB
