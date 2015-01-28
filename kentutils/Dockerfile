@@ -16,9 +16,5 @@ RUN curl -O http://hgdownload.soe.ucsc.edu/admin/exe/userApps.v$_KENTUTILS_VERSI
     tar xf userApps.v$_KENTUTILS_VERSION.src.tgz && \
     rm userApps.v$_KENTUTILS_VERSION.src.tgz
 
-RUN cd userApps && \
-    make libs && \
-    cd kent/src && \
-    make topLibs hgLib destBin && \
-    cd utils && \
-    make userAppsB
+RUN cd userApps/kent/src && \
+    make libs userApps BINDIR=/userApps/bin
