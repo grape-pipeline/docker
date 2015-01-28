@@ -19,6 +19,3 @@ RUN filename=$(curl -sLI https://api.github.com/repos/arq5x/bedtools2/tarball | 
     cd $dirname && \
     make && \
     cp -p --update bin/* /usr/local/bin
-
-ENTRYPOINT ["bedtools"]
-CMD ["--help"]

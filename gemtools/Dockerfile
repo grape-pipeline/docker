@@ -15,6 +15,3 @@ RUN cd gemtools && \
 
 RUN cd gemtools && \
     python setup.py install
-
-ENTRYPOINT ["gemtools"]
-CMD ["--help"]

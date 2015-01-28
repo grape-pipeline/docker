@@ -28,5 +28,3 @@ RUN filename=$(curl -sLI https://api.github.com/repos/samtools/samtools/tarball/
     dirname=${filename%.tar.gz} && \
     cd $dirname && \
     cp -p --update samtools bcftools/bcftools /usr/local/bin
-
-ENTRYPOINT ["samtools"]

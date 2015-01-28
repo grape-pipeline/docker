@@ -16,6 +16,3 @@ RUN curl -O http://artifactory.sammeth.net/artifactory/barna/barna/barna.capacit
 RUN tar xf flux-capacitor-1.6.1.tgz
 
 ENV PATH $PATH:/flux-capacitor-1.6.1/bin
-
-ENTRYPOINT ["flux-capacitor"]
-CMD ["--help"]

@@ -39,5 +39,3 @@ RUN filename=$(curl -sLI https://api.github.com/repos/pezmaster31/bamtools/tarba
     cd $dirname && \
     cd build && \
     make install
-
-ENTRYPOINT ["bamtools"]
