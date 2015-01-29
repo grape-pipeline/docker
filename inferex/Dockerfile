@@ -3,7 +3,7 @@
 # Tools
 # -----
 # RSeQC       v2.3.9
-# KentUtils  v308
+# KentUtils   v308
 
 FROM       grape/base
 MAINTAINER Emilio Palumbo <emiliopalumbo@gmail.com>
