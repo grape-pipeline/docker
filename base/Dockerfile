@@ -1,6 +1,5 @@
-# Dockerfile for the base image
+# Dockerfile for the GRAPE base container
 #
-# VERSION               0.1
 
 FROM       debian:latest
 MAINTAINER Emilio Palumbo <emiliopalumbo@gmail.com>
