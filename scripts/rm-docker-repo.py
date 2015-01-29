@@ -9,6 +9,7 @@ import requests
 import json
 import sys
 from docopt import docopt
+from os.path import expanduser
 
 cmd = sys.argv[0].replace("./", "").replace(".py","")
 
@@ -20,7 +21,8 @@ if __name__ == "__main__":
     repos = sys.argv[2:]
     
     # load docker user configuration
-    cfg = json.load(open('/home/epalumbo/.dockercfg'))
+    home = expanduser('~')
+    cfg = json.load(open('{0}/.dockercfg'.format(home)))
     
     # set up request header
     header = {}
@@ -32,9 +34,9 @@ if __name__ == "__main__":
     
     #do the job
     for repo in repos:
-    
+        
         url = "{0}repositories/{1}/{2}/".format(cfg.keys()[0], namespace, repo)
-       
+        
         print "=== Deleting {0}/{1}".format(namespace, repo)
         r = requests.delete(url, headers=header)
         print "Response: {0}".format(r)
