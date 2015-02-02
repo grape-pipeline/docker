@@ -13,7 +13,8 @@ ENV _SAMTOOLS_VERSION 0.1.19
 
 ENV PATH /usr/local/lib/python2.7/dist-packages/gem/gembinaries/:$PATH
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
+    apt-get install -y \
     libbz2-dev pigz libncurses-dev
 
 RUN filename=$(curl -sLI https://api.github.com/repos/gemtools/gemtools/tarball/v$_GEMTOOLS_VERSION | grep filename= | sed 's/.*filename=\(.*\)\r/\1/g') && \
