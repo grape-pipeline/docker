@@ -5,5 +5,11 @@ A repository containing Dockerfiles for Grape tools.
 The following Dockerfiles are available:
 
 - base
-- bedtools
-- gemtools
+- mapping
+  - gem
+- inferex
+  - rseqc
+- contig
+  - rgcrg
+- quantification
+  - flux
