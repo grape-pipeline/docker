@@ -6,7 +6,7 @@
 # SAMtools  v0.1.19
 
 FROM       grape/base
-MAINTAINER Emilio Palumbo <emiliopalumbo@gmail.com
+MAINTAINER Emilio Palumbo <emiliopalumbo@gmail.com>
 
 ENV _GEMTOOLS_VERSION 1.7.1
 ENV _SAMTOOLS_VERSION 0.1.19
