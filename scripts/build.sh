@@ -25,17 +25,20 @@ error() {
 ################################################################################
 [ $# == 2 ] || error
 
-logFile="$2/build.log"
+tag=$1
+targetDir=$2
+logFile="$targetDir/build.log"
+dockerFile="$targetDir/Dockerfile"
 
-log "Using $2/Dockerfile"
+log "Using $dockerFile"
 log "Building temporary image..."
 ID=$(uuidgen)
-docker build -t $ID . >$logFile 2>&1
+docker build -t $ID $targetDir >$logFile 2>&1
 
 log "Squashing image and tagging..."
 params=""
-[[ $1 =~ base ]] && params="$params -from root"
-[ $1 ] && [[ ! $1 =~ [-.] ]] && params="$params -t $1"
+[[ $tag =~ base ]] && params="$params -from root"
+[[ ! $tag =~ [-.] ]] && params="$params -t $tag"
 docker save $ID | sudo docker-squash $params | docker load >>$logFile 2>&1
 
 log "Removing temporary image..."
