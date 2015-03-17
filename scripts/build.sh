@@ -30,18 +30,19 @@ targetDir=$2
 logFile="$targetDir/build.log"
 dockerFile="$targetDir/Dockerfile"
 
-log "Using $dockerFile"
+log "Dockerfie: ${BLUE}$dockerFile${NORMAL}" 
+log "Tag:       ${YELLOW}$tag${NORMAL}"
 log "Building temporary image..."
 ID=$(uuidgen)
-docker build -t $ID $targetDir >$logFile 2>&1
+docker build -t $ID $targetDir >$logFile 
 
 log "Squashing image and tagging..."
 params=""
 [[ $tag =~ base ]] && params="$params -from root"
-[[ ! $tag =~ [-.] ]] && params="$params -t $tag"
-docker save $ID | sudo docker-squash $params | docker load >>$logFile 2>&1
+[[ ! $tag =~ [-.:]$ ]] && params="$params -t $tag"
+docker save $ID | sudo docker-squash $params | docker load >>$logFile
 
 log "Removing temporary image..."
-docker rmi $ID >>$logFile 2>&1
+docker rmi $ID >>$logFile
 
 log "${GREEN}DONE${NORMAL}"
