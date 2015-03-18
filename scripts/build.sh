@@ -29,6 +29,8 @@ tag=$1
 targetDir=$2
 logFile="$targetDir/build.log"
 dockerFile="$targetDir/Dockerfile"
+gitRev=$(git rev-parse --short HEAD)
+revTag="$tag-$gitRev"
 
 log "Dockerfie: ${BLUE}$dockerFile${NORMAL}" 
 log "Tag:       ${YELLOW}$tag${NORMAL}"
