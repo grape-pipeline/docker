@@ -13,40 +13,32 @@ ENV _KENTUTILS_VERSION 308
 
 ENV PATH /userApps/bin:$PATH
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing && \
-    apt-get install -y \
-    unzip libpng-dev libmysqlclient-dev
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpng-dev \
+    libmysqlclient-dev \
+    python-pip \
+    python-dev \
+    gcc \
+    make \
+    build-essential
 
 RUN pip install numpy pysam
 
-RUN filename=RSeQC-$_RSEQC_VERSION.tar.gz && \
-    curl -o $filename -L http://sourceforge.net/projects/rseqc/files/$filename/download
+RUN mkdir -p build/rseqc && curl -L http://sourceforge.net/projects/rseqc/files/RSeQC-$_RSEQC_VERSION.tar.gz/download | tar xzf - --strip-components=1 -C build/rseqc
 
-RUN filename=RSeQC-$_RSEQC_VERSION.tar.gz && \
-    dirname=${filename%.tar.gz} && \
-    mkdir $dirname && \
-    tar xf $filename --strip-components=1 -C $dirname && \
-    rm $filename
-
-RUN filename=RSeQC-$_RSEQC_VERSION.tar.gz && \
-    dirname=${filename%.tar.gz} && \
-    cd $dirname && \
-    python setup.py install && \
-    rm -rf $dirname
+RUN cd build/rseqc && python setup.py install
 
 RUN rm -rf /usr/local/lib/python2.7/dist-packages/RSeQC-$_RSEQC_VERSION-py2.7-linux-x86_64.egg/pysam && \
     ln -s /usr/local/lib/python2.7/dist-packages/pysam /usr/local/lib/python2.7/dist-packages/RSeQC-$_RSEQC_VERSION-py2.7-linux-x86_64.egg/pysam
 
-RUN curl -O http://hgdownload.soe.ucsc.edu/admin/exe/userApps.v$_KENTUTILS_VERSION.src.tgz && \
-    tar xf userApps.v$_KENTUTILS_VERSION.src.tgz && \
-    rm userApps.v$_KENTUTILS_VERSION.src.tgz
+RUN curl http://hgdownload.soe.ucsc.edu/admin/exe/userApps.v$_KENTUTILS_VERSION.src.tgz | tar xzf - -C build
 
-RUN cd userApps && \
-    make libs && \
-    cd kent/src && \
-    make destBin
-    
-RUN cd userApps/kent/src/hg && \
-    make genePredToBed.userApp && \
-    cd utils && \
-    make gtfToGenePred.userApp
+RUN cd build/userApps && make libs && \
+    cd kent/src && make destBin && \
+    cd hg && make genePredToBed.userApp && \
+    cd utils && make gtfToGenePred.userApp
+
+RUN apt-get remove -y perl gcc make build-essential cmake python-dev libpng-dev libmysqlclient-dev && \
+    apt-get autoremove -y
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* build
