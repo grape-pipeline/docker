@@ -26,9 +26,8 @@ RUN pip install numpy pysam
 
 RUN mkdir -p build/rseqc && curl -L http://sourceforge.net/projects/rseqc/files/RSeQC-$_RSEQC_VERSION.tar.gz/download | tar xzf - --strip-components=1 -C build/rseqc
 
-RUN cd build/rseqc && python setup.py install
-
-RUN rm -rf /usr/local/lib/python2.7/dist-packages/RSeQC-$_RSEQC_VERSION-py2.7-linux-x86_64.egg/pysam && \
+RUN cd build/rseqc && python setup.py install && \
+    rm -rf /usr/local/lib/python2.7/dist-packages/RSeQC-$_RSEQC_VERSION-py2.7-linux-x86_64.egg/pysam && \
     ln -s /usr/local/lib/python2.7/dist-packages/pysam /usr/local/lib/python2.7/dist-packages/RSeQC-$_RSEQC_VERSION-py2.7-linux-x86_64.egg/pysam
 
 RUN curl http://hgdownload.soe.ucsc.edu/admin/exe/userApps.v$_KENTUTILS_VERSION.src.tgz | tar xzf - -C build
