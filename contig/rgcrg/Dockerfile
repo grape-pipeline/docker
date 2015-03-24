@@ -19,6 +19,7 @@ ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/local/lib/bamtools
 ENV PATH /userApps/bin:$PATH
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    libmysqlclient18 \
     libpng-dev \
     libmysqlclient-dev \
     libncurses-dev \
@@ -47,7 +48,10 @@ RUN cd build/bamtools/build && make && make install
 
 RUN curl http://hgdownload.soe.ucsc.edu/admin/exe/userApps.v$_KENTUTILS_VERSION.src.tgz | tar xzf - -C build
 
-RUN cd build/userApps && make libs && cd kent/src && make destBin && cd utils && make bedGraphToBigWig.userApps 
+RUN cd build/userApps && make libs && \
+    cd kent/src && make destBin && \
+    cd utils && make bedGraphToBigWig.userApps && \
+    cp -p --update /build/userApps/bin/* /usr/local/bin/
 
 RUN apt-get remove -y perl gcc make build-essential cmake python-dev libncurses-dev libpng-dev libmysqlclient-dev && \
     apt-get autoremove -y
