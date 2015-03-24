@@ -14,6 +14,7 @@ ENV _KENTUTILS_VERSION 308
 ENV PATH /userApps/bin:$PATH
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    libmysqlclient18 \
     libpng-dev \
     libmysqlclient-dev \
     python-pip \
@@ -35,7 +36,8 @@ RUN curl http://hgdownload.soe.ucsc.edu/admin/exe/userApps.v$_KENTUTILS_VERSION.
 RUN cd build/userApps && make libs && \
     cd kent/src && make destBin && \
     cd hg && make genePredToBed.userApp && \
-    cd utils && make gtfToGenePred.userApp
+    cd utils && make gtfToGenePred.userApp && \
+    cp -p --update /build/userApps/bin/* /usr/local/bin/
 
 RUN apt-get remove -y perl gcc make build-essential cmake python-dev libpng-dev libmysqlclient-dev && \
     apt-get autoremove -y
