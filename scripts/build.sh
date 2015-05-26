@@ -35,7 +35,7 @@ revTag="$tag-$gitRev"
 log "Dockerfie: ${BLUE}$dockerFile${NORMAL}" 
 log "Tag:       ${YELLOW}$tag${NORMAL}"
 log "Building temporary image..."
-ID=$(uuidgen)
+ID=$(uuidgen | tr [:upper:] [:lower:])
 docker build -t $ID $targetDir >$logFile 
 
 log "Squashing image and tagging..."
