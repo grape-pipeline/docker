@@ -1,0 +1,51 @@
+Sending build context to Docker daemon 4.096 kB
+Sending build context to Docker daemon 
+Step 0 : FROM grape/base
+ ---> 49aec94df025
+Step 1 : MAINTAINER Emilio Palumbo <emiliopalumbo@gmail.com>
+ ---> Using cache
+ ---> 4ff7b9be5c24
+Step 2 : ENV _RSEQC_VERSION 2.3.9
+ ---> Using cache
+ ---> 1841571ebf6e
+Step 3 : ENV _KENTUTILS_VERSION 308
+ ---> Using cache
+ ---> f8705c87e5f6
+Step 4 : ENV _SAMTOOLS_VERSION 0.1.19
+ ---> Using cache
+ ---> 23c6c12f0271
+Step 5 : ENV PATH /userApps/bin:$PATH
+ ---> Using cache
+ ---> 28cdc46e2e1a
+Step 6 : RUN apt-get update && apt-get install -y --no-install-recommends     libmysqlclient18     libpng-dev     libmysqlclient-dev     libncurses-dev     libssl-dev     python-pip     python-dev     gcc     make     build-essential
+ ---> Using cache
+ ---> bda04f10d0da
+Step 7 : RUN pip install numpy pysam
+ ---> Using cache
+ ---> de2e3269b022
+Step 8 : RUN mkdir -p build/rseqc && curl -L http://sourceforge.net/projects/rseqc/files/RSeQC-$_RSEQC_VERSION.tar.gz/download | tar xzf - --strip-components=1 -C build/rseqc
+ ---> Using cache
+ ---> 34bcbdbaf719
+Step 9 : RUN cd build/rseqc && python setup.py install &&     rm -rf /usr/local/lib/python2.7/dist-packages/RSeQC-$_RSEQC_VERSION-py2.7-linux-x86_64.egg/pysam &&     ln -s /usr/local/lib/python2.7/dist-packages/pysam /usr/local/lib/python2.7/dist-packages/RSeQC-$_RSEQC_VERSION-py2.7-linux-x86_64.egg/pysam
+ ---> Using cache
+ ---> 3ddc3a048d0a
+Step 10 : RUN curl http://hgdownload.soe.ucsc.edu/admin/exe/userApps.v$_KENTUTILS_VERSION.src.tgz | tar xzf - -C build
+ ---> Using cache
+ ---> 0b23829eed0c
+Step 11 : RUN cd build/userApps && make libs &&     cd kent/src && make destBin &&     cd hg && make genePredToBed.userApp &&     cd utils && make gtfToGenePred.userApp &&     cp -p --update /build/userApps/bin/* /usr/local/bin/
+ ---> Using cache
+ ---> 231651695ca0
+Step 12 : RUN mkdir -p build/samtools && curl -L https://api.github.com/repos/samtools/samtools/tarball/$_SAMTOOLS_VERSION | tar xzf - --strip-components=1 -C build/samtools
+ ---> Using cache
+ ---> e47919b5eec4
+Step 13 : RUN cd build/samtools && make && cp -p --update samtools bcftools/bcftools /usr/local/bin
+ ---> Using cache
+ ---> a1b5863b8a24
+Step 14 : RUN apt-get remove -y perl gcc make build-essential cmake python-dev libpng-dev libmysqlclient-dev libssl-dev &&     apt-get autoremove -y
+ ---> Using cache
+ ---> b02b92f61556
+Step 15 : RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* build
+ ---> Using cache
+ ---> cd1795f6a1e2
+Successfully built cd1795f6a1e2
+Untagged: 3fe7efaf-cb00-4491-90e8-136faf67e616:latest

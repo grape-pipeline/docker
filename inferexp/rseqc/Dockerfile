@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpng-dev \
     libmysqlclient-dev \
     libncurses-dev \
+    libssl-dev \
     python-pip \
     python-dev \
     gcc \
@@ -46,7 +47,7 @@ RUN mkdir -p build/samtools && curl -L https://api.github.com/repos/samtools/sam
 
 RUN cd build/samtools && make && cp -p --update samtools bcftools/bcftools /usr/local/bin
 
-RUN apt-get remove -y perl gcc make build-essential cmake python-dev libpng-dev libmysqlclient-dev && \
+RUN apt-get remove -y perl gcc make build-essential cmake python-dev libpng-dev libmysqlclient-dev libssl-dev && \
     apt-get autoremove -y
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* build
