@@ -15,7 +15,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     make \
     build-essential \
-    pigz \
     zlib1g-dev \
     libncurses-dev \
     vim-common

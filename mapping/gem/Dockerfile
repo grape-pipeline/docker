@@ -19,7 +19,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     python-dev \
     python-pip \
-    pigz \
     libbz2-dev \
     libncurses-dev
 
