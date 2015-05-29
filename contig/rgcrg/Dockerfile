@@ -23,6 +23,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpng-dev \
     libmysqlclient-dev \
     libncurses-dev \
+    libssl-dev \
     cmake \
     python-pip \
     python-dev \
@@ -53,7 +54,7 @@ RUN cd build/userApps && make libs && \
     cd utils && make bedGraphToBigWig.userApps && \
     cp -p --update /build/userApps/bin/* /usr/local/bin/
 
-RUN apt-get remove -y perl gcc make build-essential cmake python-dev libncurses-dev libpng-dev libmysqlclient-dev && \
+RUN apt-get remove -y perl gcc make build-essential cmake python-dev libncurses-dev libpng-dev libmysqlclient-dev libssl-dev && \
     apt-get autoremove -y
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* build
