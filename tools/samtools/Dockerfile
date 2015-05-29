@@ -1,30 +1,26 @@
 # Dockerfile for SAMtools
 #
-# VERSION               0.1
-
+# Tools
+# -----
+# SAMtools v0.1.19
+#
 FROM       grape/base
 MAINTAINER Emilio Palumbo <emiliopalumbo@gmail.com>
 
 ENV _SAMTOOLS_VERSION 0.1.19
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    make \
+    build-essential \
+    zlib1g-dev \
     libncurses-dev
 
-RUN filename=$(curl -sLI https://api.github.com/repos/samtools/samtools/tarball/$_SAMTOOLS_VERSION | grep filename= | sed 's/.*filename=\(.*\)\r/\1/g') && \
-    curl -o $filename -L https://api.github.com/repos/samtools/samtools/tarball/$_SAMTOOLS_VERSION
+RUN mkdir -p build/samtools && curl -L https://api.github.com/repos/samtools/samtools/tarball/$_SAMTOOLS_VERSION | tar xzf - --strip-components=1 -C build/samtools
 
-RUN filename=$(curl -sLI https://api.github.com/repos/samtools/samtools/tarball/$_SAMTOOLS_VERSION | grep filename= | sed 's/.*filename=\(.*\)\r/\1/g') && \
-    dirname=${filename%.tar.gz} && \
-    mkdir $dirname && \
-    tar xf $filename --strip-components=1 -C $dirname && \
-    rm $filename
+RUN cd build/samtools && make && cp -p --update samtools bcftools/bcftools /usr/local/bin
 
-RUN filename=$(curl -sLI https://api.github.com/repos/samtools/samtools/tarball/$_SAMTOOLS_VERSION | grep filename= | sed 's/.*filename=\(.*\)\r/\1/g') && \
-    dirname=${filename%.tar.gz} && \
-    cd $dirname && \
-    make
+RUN apt-get remove -y gcc make build-essential zlib1g-dev libncurses-dev && \
+    apt-get autoremove -y
 
-RUN filename=$(curl -sLI https://api.github.com/repos/samtools/samtools/tarball/$_SAMTOOLS_VERSION | grep filename= | sed 's/.*filename=\(.*\)\r/\1/g') && \
-    dirname=${filename%.tar.gz} && \
-    cd $dirname && \
-    cp -p --update samtools bcftools/bcftools /usr/local/bin
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

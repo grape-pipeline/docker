@@ -5,7 +5,7 @@
 # JavaRE        v1.7.0_76
 # FluxCapacitor v1.6.1
 
-FROM       grape/base
+FROM       grape/samtools:0.1.19
 MAINTAINER Emilio Palumbo <emiliopalumbo@gmail.com>
 
 ENV _JAVA_VERSION 1.7.0_76
