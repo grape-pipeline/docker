@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     zlib1g-dev \
     libncurses-dev \
+    perl \
     r-base
 
 RUN mkdir -p build/samtools && curl -L https://github.com/samtools/samtools/releases/download/1.2/samtools-$_SAMTOOLS_VERSION.tar.bz2 | tar xj --strip-components=1 -C build/samtools 
