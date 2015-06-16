@@ -8,7 +8,7 @@ FROM       grape/base
 MAINTAINER Emilio Palumbo <emiliopalumbo@gmail.com>
 
 ENV _RSEM_VERSION 1.2.15
-ENV _SAMTOOLS_VERSION 1.2
+ENV _SAMTOOLS_VERSION 1.2-rglab-CRG
 ENV PATH /build/rsem:$PATH
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -20,9 +20,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     perl \
     r-base
 
-RUN mkdir -p build/samtools && curl -L https://github.com/samtools/samtools/releases/download/1.2/samtools-$_SAMTOOLS_VERSION.tar.bz2 | tar xj --strip-components=1 -C build/samtools 
+RUN mkdir -p build/samtools && curl -L https://github.com/emi80/samtools/releases/download/$_SAMTOOLS_VERSION/samtools-$_SAMTOOLS_VERSION.tar.bz2 | tar xj --strip-components=1 -C build/samtools 
 
-RUN cd build/samtools && make && cp -p --update samtools /usr/local/bin
+RUN cd build/samtools && make && make install
 
 RUN mkdir -p build/rsem && curl -L http://deweylab.biostat.wisc.edu/rsem/src/rsem-$_RSEM_VERSION.tar.gz | tar xzf - --strip-components=1 -C build/rsem
 
