@@ -2,12 +2,12 @@
 #
 # Tools
 # -----
-# RSEM  v1.2.15
+# RSEM  v1.2.21
 #
 FROM       grape/base
 MAINTAINER Emilio Palumbo <emiliopalumbo@gmail.com>
 
-ENV _RSEM_VERSION 1.2.15
+ENV _RSEM_VERSION 1.2.21
 ENV _SAMTOOLS_VERSION 1.2-rglab-CRG
 ENV PATH /build/rsem:$PATH
 
